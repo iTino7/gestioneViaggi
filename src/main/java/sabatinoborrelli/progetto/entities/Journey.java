@@ -1,8 +1,8 @@
-package sabatinoborrelli.gestioneViaggi.entities;
+package sabatinoborrelli.progetto.entities;
 
 
 import jakarta.persistence.*;
-import sabatinoborrelli.gestioneViaggi.enums.StateJourney;
+import sabatinoborrelli.progetto.enums.StateJourney;
 
 import java.time.LocalDate;
 

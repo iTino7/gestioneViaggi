@@ -1,4 +1,4 @@
-package sabatinoborrelli.gestioneViaggi.exceptions;
+package sabatinoborrelli.progetto.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

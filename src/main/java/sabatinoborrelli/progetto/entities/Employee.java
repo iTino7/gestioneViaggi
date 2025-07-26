@@ -1,4 +1,4 @@
-package sabatinoborrelli.gestioneViaggi.entities;
+package sabatinoborrelli.progetto.entities;
 
 
 import jakarta.persistence.Entity;

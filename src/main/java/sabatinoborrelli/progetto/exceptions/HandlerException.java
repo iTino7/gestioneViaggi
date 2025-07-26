@@ -1,4 +1,4 @@
-package sabatinoborrelli.gestioneViaggi.exceptions;
+package sabatinoborrelli.progetto.exceptions;
 
 
 import org.springframework.http.HttpStatus;
