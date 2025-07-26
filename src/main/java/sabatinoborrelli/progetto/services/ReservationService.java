@@ -39,7 +39,7 @@ public class ReservationService {
         Employee employee = employeeService.getById(employeeId);
         Journey journey = journeyService.getById(journeyId);
 
-        if (reservationRepository.existsEmployeeIdAndDate(employeeId, date)) {
+        if (reservationRepository.existsByEmployee_IdAndDate(employeeId, date)) {
             throw new BadRequestException("Dipendente già prenotato per queste date");
         }
 
