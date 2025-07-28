@@ -3,6 +3,7 @@ package sabatinoborrelli.progetto.payloads;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class NewEmployeeDTO {
@@ -18,6 +19,17 @@ public class NewEmployeeDTO {
     @NotBlank
     @Email(message = "formato email non valito")
     String email;
+    @NotEmpty(message = "La passord è obbligatoria")
+    @Size(min = 4)
+    String password;
+
+    public NewEmployeeDTO(String username, String name, String surname, String email, String password) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;
@@ -51,6 +63,14 @@ public class NewEmployeeDTO {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "NewEmployeeDTO{" +
@@ -58,6 +78,7 @@ public class NewEmployeeDTO {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

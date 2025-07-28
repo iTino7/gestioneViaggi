@@ -17,15 +17,18 @@ public class Employee {
     private String name;
     private String surname;
     private String email;
+    private String password;
 
     public Employee() {
     }
 
-    public Employee(String username, String name, String surname, String email) {
+
+    public Employee(String username, String name, String surname, String email, String password) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.password = password;
     }
 
     public long getId() {
@@ -64,6 +67,14 @@ public class Employee {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -72,6 +83,7 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
