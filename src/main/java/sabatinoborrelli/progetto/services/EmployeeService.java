@@ -36,7 +36,8 @@ public class EmployeeService {
         });
 
         // 2. Aggiungo valori server-generated
-        Employee newUser = new NewEmployeeDTO(payload.getName(), payload.getSurname(), payload.getEmail(), payload.getPassword());
+        Employee newUser = new Employee(payload.getUsername(), payload.getName(), payload.getSurname(), payload.getEmail(), payload.getPassword());
+
 
         // 3. Salvo
         Employee savedUser = this.employeeRepository.save(newUser);
