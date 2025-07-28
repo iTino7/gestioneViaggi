@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sabatinoborrelli.progetto.entities.Employee;
+import sabatinoborrelli.progetto.exceptions.NotFoundException;
 import sabatinoborrelli.progetto.exceptions.UnauthorizedException;
 import sabatinoborrelli.progetto.payloads.LoginDTO;
 import sabatinoborrelli.progetto.security.JwTools;
@@ -18,13 +19,20 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     public String authenticEmployee(LoginDTO body) {
-        Employee employee = this.employeeService.findByEmail(body.email());
+        Employee employee;
+        try {
+            employee = this.employeeService.findByEmail(body.email());
+        } catch (NotFoundException ex) {
+            throw new UnauthorizedException("Invalid email or password");
+        }
         if (passwordEncoder.matches(body.password(), employee.getPassword())) {
             return jwTools.createToken(employee);
         } else {
             throw new UnauthorizedException("Invalid email or password");
         }
+
     }
 
 

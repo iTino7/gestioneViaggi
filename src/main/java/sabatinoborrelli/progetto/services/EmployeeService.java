@@ -36,7 +36,8 @@ public class EmployeeService {
         });
 
         // 2. Aggiungo valori server-generated
-        Employee newUser = new Employee(payload.getUsername(), payload.getName(), payload.getSurname(), payload.getEmail(), payload.getPassword());
+        String encodedPassword = bcrypt.encode(payload.getPassword());
+        Employee newUser = new Employee(payload.getUsername(), payload.getName(), payload.getSurname(), payload.getEmail(), encodedPassword);
 
 
         // 3. Salvo

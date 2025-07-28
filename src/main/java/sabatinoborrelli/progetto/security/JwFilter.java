@@ -27,7 +27,7 @@ public class JwFilter extends OncePerRequestFilter {
         if (authHeader == null || !authHeader.startsWith("Bearer "))
             throw new UnauthorizedException("Inserire il token nel formato corretto!");
 
-        String accessToken = authHeader.replace("Bearer ", "").trim();
+        String accessToken = authHeader.replace("Bearer ", "");
 
         jwTools.verifyToken(accessToken);
 

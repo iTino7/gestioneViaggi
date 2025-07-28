@@ -1,11 +1,12 @@
 package sabatinoborrelli.progetto.controllers;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import sabatinoborrelli.progetto.exceptions.BadrequestException;
 import sabatinoborrelli.progetto.payloads.EmployeeResponseDTO;
 import sabatinoborrelli.progetto.payloads.LoginDTO;
 import sabatinoborrelli.progetto.payloads.LoginRespDTO;
@@ -29,9 +30,15 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeResponseDTO save(@RequestBody @Validated NewEmployeeDTO body, BindingResult validation) throws BadRequestException {
+    public EmployeeResponseDTO save(@RequestBody @Validated NewEmployeeDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
-            throw new BadRequestException((Throwable) validation.getAllErrors());
+            String errorMessages = validation.getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .reduce((msg1, msg2) -> msg1 + "; " + msg2)
+                    .orElse("Errore di validazione");
+
+            throw new BadrequestException(errorMessages);
         }
         return new EmployeeResponseDTO(this.employeeService.save(body).getId());
     }
