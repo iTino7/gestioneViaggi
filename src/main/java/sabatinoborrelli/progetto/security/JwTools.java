@@ -20,7 +20,7 @@ public class JwTools {
         return Jwts.builder()
                 .issuedAt(currentDate)
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
-                .subject(String.valueOf(employee.getId()))
+                .subject(String.valueOf(employee.getId().toString()))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
@@ -33,5 +33,10 @@ public class JwTools {
         } catch (Exception ex) {
             throw new UnauthorizedException("Problemi con il token");
         }
+    }
+
+    public String extractIdFromToken(String accessToken) {
+        return Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parseSignedClaims(accessToken).getPayload().getSubject();
+        // All'interno del payload, nel campo Subject avevamo inserito l'id dell'utente
     }
 }

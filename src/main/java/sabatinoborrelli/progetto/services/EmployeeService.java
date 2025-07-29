@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import sabatinoborrelli.progetto.entities.Employee;
 import sabatinoborrelli.progetto.exceptions.BadrequestException;
 import sabatinoborrelli.progetto.exceptions.NotFoundException;
+import sabatinoborrelli.progetto.exceptions.RecordNotFoundException;
 import sabatinoborrelli.progetto.payloads.NewEmployeeDTO;
 import sabatinoborrelli.progetto.repositories.EmployeedRepository;
+
+import java.util.UUID;
 
 @Service
 public class EmployeeService {
@@ -27,6 +30,18 @@ public class EmployeeService {
         if (pageSize > 10) pageSize = 10;
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by(sortBy));
         return this.employeeRepository.findAll(pageable);
+    }
+
+    public Employee findById(UUID id) {
+        return this.employeeRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+    }
+
+    public Page<Employee> getEmployees(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
+    }
+
+    public Employee getEmployee(UUID id) {
+        return employeeRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Employee", id));
     }
 
     public Employee save(NewEmployeeDTO payload) {
@@ -62,12 +77,13 @@ public class EmployeeService {
         return employeeRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
     }
 
-    public Employee getById(long id) {
+
+    public Employee getById(UUID id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Dipendente non trovato con id " + id));
     }
 
-    public Employee update(long id, Employee update) {
+    public Employee update(UUID id, Employee update) {
         Employee found = getById(id);
         found.setUsername(update.getUsername());
         found.setName(update.getName());
@@ -76,7 +92,7 @@ public class EmployeeService {
         return employeeRepository.save(found);
     }
 
-    public void delete(long id) {
+    public void delete(UUID id) {
         Employee found = this.getById(id);
         this.employeeRepository.delete(found);
     }

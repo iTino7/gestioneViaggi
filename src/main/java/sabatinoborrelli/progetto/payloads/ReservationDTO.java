@@ -3,34 +3,35 @@ package sabatinoborrelli.progetto.payloads;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class ReservationDTO {
     @NotNull(message = "L'id del dipendente è obbligatorio")
-    private long employeeId;
+    private UUID employeeId;
     @NotNull(message = "L'id del viaggio è obbligatorio")
-    private long journeyId;
+    private UUID journeyId;
     @NotNull(message = "La data della prenotazione è obbligatoria")
     private LocalDate date;
 
-    public ReservationDTO(long employeeId, long journeyId, LocalDate date) {
+    public ReservationDTO(UUID employeeId, UUID journeyId, LocalDate date) {
         this.employeeId = employeeId;
         this.journeyId = journeyId;
         this.date = date;
     }
 
-    public long getEmployeeId() {
+    public UUID getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(long employeeId) {
+    public void setEmployeeId(UUID employeeId) {
         this.employeeId = employeeId;
     }
 
-    public long getJourneyId() {
+    public UUID getJourneyId() {
         return journeyId;
     }
 
-    public void setJourneyId(long journeyId) {
+    public void setJourneyId(UUID journeyId) {
         this.journeyId = journeyId;
     }
 

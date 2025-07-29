@@ -12,6 +12,7 @@ import sabatinoborrelli.progetto.payloads.JourneyDTO;
 import sabatinoborrelli.progetto.services.JourneyService;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/journeys")
@@ -25,7 +26,7 @@ public class JourneyController {
     }
 
     @GetMapping("/{id}")
-    public Journey getById(@PathVariable long id) {
+    public Journey getById(@PathVariable UUID id) {
         return journeyService.getById(id);
     }
 
@@ -37,14 +38,14 @@ public class JourneyController {
     }
 
     @PutMapping("/{id}")
-    public Journey update(@PathVariable long id, @Valid @RequestBody JourneyDTO dto) {
+    public Journey update(@PathVariable UUID id, @Valid @RequestBody JourneyDTO dto) {
         Journey journey = new Journey(dto.getDestination(), StateJourney.valueOf(dto.getState()), LocalDate.parse(dto.getDate()));
         return journeyService.update(id, journey);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable UUID id) {
         journeyService.delete(id);
     }
 }

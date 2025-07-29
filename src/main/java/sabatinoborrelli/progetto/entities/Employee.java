@@ -1,23 +1,32 @@
 package sabatinoborrelli.progetto.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import sabatinoborrelli.progetto.enums.Role;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "employees")
-public class Employee {
+@JsonIgnoreProperties({"password"})
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue
-    private long id;
+    private UUID id;
     private String username;
     private String name;
     private String surname;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Employee() {
     }
@@ -29,14 +38,22 @@ public class Employee {
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.role = Role.USER;
     }
 
-    public long getId() {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
+
+    public UUID getId() {
         return id;
     }
 
+    @Override
     public String getUsername() {
-        return username;
+        return this.email;
     }
 
     public void setUsername(String username) {

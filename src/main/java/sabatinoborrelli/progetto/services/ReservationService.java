@@ -13,6 +13,7 @@ import sabatinoborrelli.progetto.exceptions.NotFoundException;
 import sabatinoborrelli.progetto.repositories.ReservationRepository;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 public class ReservationService {
@@ -30,12 +31,12 @@ public class ReservationService {
         return reservationRepository.findAll(pageable);
     }
 
-    public Reservation getById(Long id) {
+    public Reservation getById(UUID id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Prenotazione non trovata con questo id: " + id));
     }
 
-    public Reservation create(long employeeId, long journeyId, LocalDate date) throws BadRequestException {
+    public Reservation create(UUID employeeId, UUID journeyId, LocalDate date) throws BadRequestException {
         Employee employee = employeeService.getById(employeeId);
         Journey journey = journeyService.getById(journeyId);
 
@@ -47,7 +48,7 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    public void delete(long id) {
+    public void delete(UUID id) {
         Reservation found = this.getById(id);
         this.reservationRepository.delete(found);
     }

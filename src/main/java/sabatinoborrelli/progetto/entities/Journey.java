@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import sabatinoborrelli.progetto.enums.StateJourney;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "journeys")
@@ -12,7 +13,7 @@ public class Journey {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private UUID id;
 
     @Column
     private String destination;
@@ -29,7 +30,7 @@ public class Journey {
         this.date = date;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 

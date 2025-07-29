@@ -1,4 +1,4 @@
 package sabatinoborrelli.progetto.payloads;
 
-public record EmployeeResponseDTO(Long employeeId) {
+public record EmployeeResponseDTO(java.util.UUID employeeId) {
 }

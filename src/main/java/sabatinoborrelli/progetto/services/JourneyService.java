@@ -8,6 +8,8 @@ import sabatinoborrelli.progetto.entities.Journey;
 import sabatinoborrelli.progetto.exceptions.NotFoundException;
 import sabatinoborrelli.progetto.repositories.JourneyRepository;
 
+import java.util.UUID;
+
 @Service
 public class JourneyService {
     @Autowired
@@ -17,7 +19,7 @@ public class JourneyService {
         return journeyRepository.findAll(pageable);
     }
 
-    public Journey getById(long id) {
+    public Journey getById(UUID id) {
         return journeyRepository.findById(id).
                 orElseThrow(() -> new NotFoundException("Viaggio con id non trovato: " + id));
     }
@@ -26,7 +28,7 @@ public class JourneyService {
         return journeyRepository.save(journey);
     }
 
-    public Journey update(long id, Journey update) {
+    public Journey update(UUID id, Journey update) {
         Journey found = getById(id);
         found.setDestination(update.getDestination());
         found.setDate(update.getDate());
@@ -34,7 +36,7 @@ public class JourneyService {
         return journeyRepository.save(found);
     }
 
-    public void delete(long id) {
+    public void delete(UUID id) {
         Journey found = this.getById(id);
         this.journeyRepository.delete(found);
     }

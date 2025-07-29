@@ -12,6 +12,8 @@ import sabatinoborrelli.progetto.entities.Reservation;
 import sabatinoborrelli.progetto.payloads.ReservationDTO;
 import sabatinoborrelli.progetto.services.ReservationService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
@@ -24,7 +26,7 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public Reservation getById(@PathVariable long id) {
+    public Reservation getById(@PathVariable UUID id) {
         return reservationService.getById(id);
     }
 
@@ -36,7 +38,7 @@ public class ReservationController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable UUID id) {
         reservationService.delete(id);
     }
 }

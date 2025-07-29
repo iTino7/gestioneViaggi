@@ -4,6 +4,7 @@ package sabatinoborrelli.progetto.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "reservations")
@@ -12,7 +13,7 @@ public class Reservation {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private long id;
+    private UUID id;
     @ManyToOne
     @JoinColumn(name = "journey_id")
     private Journey journey;
@@ -30,7 +31,7 @@ public class Reservation {
         this.date = date;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
